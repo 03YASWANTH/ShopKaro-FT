@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { FaHome, FaShoppingCart, FaSearch, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaShoppingCart, FaSearch, FaSignOutAlt, FaBox } from "react-icons/fa";
 
 export const Navbar = ({ cartItemsCount = 0, searchTerm, setSearchTerm }) => {
   
@@ -54,6 +54,13 @@ export const Navbar = ({ cartItemsCount = 0, searchTerm, setSearchTerm }) => {
             </span>
           )}
         </button>
+        <button
+          className="text-white p-2 rounded-full hover:bg-orange-600 transition-all duration-300"
+          onClick={() => navigate("/myorders")}
+        >
+          <FaBox size={20} />
+        </button>
+
 
         <button
           className="p-2 rounded-full hover:bg-red-600 transition-all duration-300"

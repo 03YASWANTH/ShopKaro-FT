@@ -30,7 +30,7 @@ export const Home = ({ searchTerm }) => {
     let results = products.filter(
       (p) =>
         p.title.toLowerCase().includes(term) ||
-        p.category.name.toLowerCase().includes(term)
+        p.category.toLowerCase().includes(term)
     );
 
     if (minPrice) {

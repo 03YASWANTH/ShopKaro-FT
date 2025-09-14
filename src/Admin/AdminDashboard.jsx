@@ -210,7 +210,7 @@ const AdminApp = () => {
 
   const onLogout = () => {
     localStorage.removeItem("token");
-    Navigate("/signin");
+    Navigate("/");
   };
 
   const renderSidebar = () => (

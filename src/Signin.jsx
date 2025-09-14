@@ -29,7 +29,7 @@ const Signin = () => {
       if (form.role === "admin") {
         navigate("/admin");
       } else {
-        navigate("/");
+        navigate("/home");
       }
     } else {
       alert(data.message);
