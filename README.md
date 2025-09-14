@@ -21,21 +21,17 @@ This is the frontend of the **ShopKaro** application, built with **React**, **Re
 
 ## Setup & Installation
 
-1. Clone the repository:
+Run the following commands in your terminal:
 
 ```bash
+# Clone the repository
 git clone https://github.com/yourusername/shopkaro-frontend.git
+
+# Navigate into the project folder
 cd shopkaro-frontend
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
 
-
-3.Start the development server:
-```bash
+# Start the development server
 npm run dev
-
-
-4.Open http://localhost:5173
- in your browser.
