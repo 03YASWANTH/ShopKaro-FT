@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { cartAtom } from '../atoms/cartAtom';
 import { productAtom } from '../atoms/productAtom';
-import { FaArrowLeft, FaShoppingCart, FaHeart, FaShare, FaStar } from 'react-icons/fa';
+import { FaArrowLeft, FaShoppingCart } from 'react-icons/fa';
 import toast, { Toaster } from 'react-hot-toast';
 
 export const Product = () => {
@@ -11,10 +11,8 @@ export const Product = () => {
     const navigate = useNavigate();
     const products = useRecoilValue(productAtom);
     const [cart, setCart] = useRecoilState(cartAtom);
-    const product = products.find(p => p.id == id);
-    
-    const [selectedImage, setSelectedImage] = useState(0);
-    const [isFavorite, setIsFavorite] = useState(false);
+    const product = products.find(p => p._id === id);
+   
     const [quantity, setQuantity] = useState(1);
     
     if (!product) {
@@ -23,7 +21,7 @@ export const Product = () => {
                 <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md">
                     <FaShoppingCart className="mx-auto text-gray-300 mb-4" size={64} />
                     <h2 className="text-2xl font-bold text-gray-700 mb-2">Product Not Found</h2>
-                    <p className="text-gray-500 mb-6">We couldn't find the product you're looking for.</p>
+                    <p className="text-gray-500 mb-6">We couldn&apos;t find the product you&apos;re looking for.</p>
                     <button 
                         className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition shadow-md"
                         onClick={() => navigate('/')}
@@ -35,12 +33,12 @@ export const Product = () => {
         );
     }
     
-    const isInCart = cart.some(item => item.id === product.id);
+    const isInCart = cart.some(item => item._id === product._id);
     
     const handleCartToggle = () => {
         if (isInCart) {
-            setCart(cart.filter(item => item.id !== product.id));
-            toast.error((t) => (
+            setCart(cart.filter(item => item._id !== product._id));
+            toast.error(() => (
                 <div className="flex items-center">
                     <FaShoppingCart className="mr-2" />
                     <span>Removed from Cart</span>
@@ -51,7 +49,7 @@ export const Product = () => {
             });
         } else {
             setCart([...cart, { ...product, quantity }]);
-            toast.success((t) => (
+            toast.success(() => (
                 <div className="flex items-center">
                     <FaShoppingCart className="mr-2" />
                     <span>Added to Cart</span>
@@ -68,7 +66,6 @@ export const Product = () => {
     
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* React Hot Toast Container */}
             <Toaster 
                 position="top-center"
                 toastOptions={{
@@ -111,31 +108,12 @@ export const Product = () => {
                         <div className="md:w-1/2 p-6 flex flex-col">
                             <div className="relative mb-4 bg-gray-50 rounded-lg overflow-hidden">
                                 <img
-                                    src={product.images[selectedImage]}
+                                    src={product.ImageUrl}
                                     alt={product.title}
                                     className="w-full h-80 md:h-96 object-contain mix-blend-multiply"
                                 />
                             </div>
                             
-                            {product.images.length > 1 && (
-                                <div className="flex space-x-2 overflow-x-auto pb-2">
-                                    {product.images.map((img, idx) => (
-                                        <button
-                                            key={idx}
-                                            className={`flex-shrink-0 border-2 rounded-md overflow-hidden ${
-                                                selectedImage === idx ? 'border-blue-500' : 'border-gray-200'
-                                            }`}
-                                            onClick={() => setSelectedImage(idx)}
-                                        >
-                                            <img 
-                                                src={img} 
-                                                alt={`${product.title} view ${idx + 1}`} 
-                                                className="w-16 h-16 object-cover"
-                                            />
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
                         </div>
                         
                         <div className="md:w-1/2 p-6 md:p-8 flex flex-col">
@@ -146,18 +124,9 @@ export const Product = () => {
                                         <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
                                             {product.category?.name || 'No Category'}
                                         </span>
-                                        <div className="flex items-center ml-4">
-                                            {[...Array(5)].map((_, i) => (
-                                                <FaStar key={i} className={i < 4 ? "text-yellow-400" : "text-gray-300"} />
-                                            ))}
-                                            <span className="ml-1 text-sm text-gray-500">(24 reviews)</span>
-                                        </div>
                                     </div>
                                 </div>
                                 
-                                <button className="text-gray-400 hover:text-gray-600 p-2">
-                                    <FaShare />
-                                </button>
                             </div>
                             
                             <div className="mt-6">
@@ -165,20 +134,6 @@ export const Product = () => {
                                 <p className="mt-2 text-gray-600 leading-relaxed">{product.description}</p>
                             </div>
                             
-                            <div className="mt-6">
-                                <h3 className="text-lg font-medium text-gray-700">Price</h3>
-                                <div className="flex items-center mt-2">
-                                    <span className="text-3xl font-bold text-blue-600">${product.price}</span>
-                                    {product.discountPercentage && (
-                                        <div className="ml-4">
-                                            <span className="text-sm text-gray-500 line-through">${(product.price * (1 + product.discountPercentage/100)).toFixed(2)}</span>
-                                            <span className="ml-1 text-sm font-medium text-green-600">
-                                                Save {product.discountPercentage}%
-                                            </span>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
                             
                             <div className="mt-6">
                                 <h3 className="text-lg font-medium text-gray-700">Quantity</h3>

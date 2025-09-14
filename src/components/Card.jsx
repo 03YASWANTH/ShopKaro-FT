@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
  export const Card = ({ product }) => {
@@ -7,10 +6,10 @@ import { useNavigate } from 'react-router-dom';
     return (
         <div 
             className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 cursor-pointer"
-            onClick={() => navigate(`/product/${product.id}`)}
+            onClick={() => navigate(`/product/${product._id}`)}
         >
             <img 
-                src={product.images[0]} 
+                src={product.ImageUrl} 
                 alt={product.title} 
                 className="w-full h-80 object-contain rounded-lg"
             />
@@ -21,7 +20,6 @@ import { useNavigate } from 'react-router-dom';
                     <p className="text-blue-600 font-bold mt-1">${product.price}</p>
                     
                 </div>
-                
             </div>
         </div>
     );
